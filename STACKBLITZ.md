@@ -1,13 +1,15 @@
-# Executar no StackBlitz
+# Abrir no StackBlitz
 
-1. Use **Upload Project** e envie este ZIP.
-2. O `package.json` está diretamente na raiz do pacote.
-3. O StackBlitz executará `npm install` e `npm run dev`.
-4. Caso o terminal não inicie automaticamente, execute:
+1. Use **Upload Project**.
+2. Envie o ZIP completo.
+3. O `package.json` já está diretamente na raiz.
+4. Aguarde:
 
 ```bash
 npm install
 npm run dev
 ```
 
-As dependências estão fixadas e o `package-lock.json` aponta somente para `https://registry.npmjs.org/`.
+A aplicação roda na porta `5173`.
+
+As dependências usam exclusivamente o registro público `registry.npmjs.org`.
