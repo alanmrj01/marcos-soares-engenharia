@@ -1,4 +1,4 @@
-# Marcos Soares — Engenharia Térmica & Refrigeração
+# Marcos Soares — Engenharia e Refrigeração
 
 Landing page/portfólio profissional em React, Vite e TypeScript para serviços de climatização, refrigeração comercial e industrial, chillers, PMOC, documentação e manutenção técnica.
 

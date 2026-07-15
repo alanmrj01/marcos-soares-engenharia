@@ -48,14 +48,14 @@ const services = [
     icon: Factory,
     number: '02',
     title: 'Refrigeração industrial',
-    text: 'Diagnóstico técnico e manutenção orientada à estabilidade térmica, confiabilidade e disponibilidade do processo.',
+    text: 'Diagnóstico técnico e manutenção orientada à estabilidade operacional, confiabilidade e disponibilidade do processo.',
     accent: 'teal',
   },
   {
     icon: Gauge,
     number: '03',
     title: 'Chillers e água gelada',
-    text: 'Análise de desempenho, falhas, parâmetros de operação, componentes e condições do circuito térmico.',
+    text: 'Análise de desempenho, falhas, parâmetros de operação, componentes e condições do circuito de refrigeração.',
     accent: 'violet',
   },
   {
@@ -305,9 +305,9 @@ export default function App() {
           <div className="hero-orbit hero-orbit--two" aria-hidden="true" />
           <div className="container hero-grid">
             <div className="hero-copy" data-reveal>
-              <div className="eyebrow"><span className="eyebrow-signal" /><HardHat size={16} /> Engenharia térmica para operações reais</div>
+              <div className="eyebrow"><span className="eyebrow-signal" /><HardHat size={16} /> Engenharia e refrigeração para operações reais</div>
               <h1>
-                Sistemas térmicos mais <span>confiáveis.</span><br />Decisões mais <em>seguras.</em>
+                Sistemas de refrigeração mais <span>confiáveis.</span><br />Decisões mais <em>seguras.</em>
               </h1>
               <p className="hero-lead">
                 Instalação, manutenção, chillers, refrigeração industrial, PMOC e documentação técnica — com visão de engenharia aplicada a ambientes comerciais e industriais.
@@ -327,7 +327,7 @@ export default function App() {
 
             <div
               className="hero-visual"
-              aria-label="Painel ilustrativo de engenharia térmica"
+              aria-label="Painel ilustrativo de engenharia e refrigeração"
               ref={heroVisualRef}
               onPointerMove={handleHeroPointerMove}
               onPointerLeave={resetHeroTilt}
@@ -393,7 +393,7 @@ export default function App() {
               <span className="section-kicker">Engenharia aplicada ao campo</span>
               <h2>Entender o sistema antes de trocar componentes.</h2>
               <p className="section-intro">
-                Uma falha térmica pode envolver capacidade, condição de operação, fluxo, automação, instalação ou manutenção. O serviço começa pela leitura correta do conjunto — não por tentativa e erro.
+                Uma falha em sistemas de refrigeração pode envolver capacidade, condição de operação, fluxo, automação, instalação ou manutenção. O serviço começa pela leitura correta do conjunto — não por tentativa e erro.
               </p>
               <div className="engineering-points">
                 <div><span><Activity size={18} /></span><p><strong>Diagnóstico estruturado</strong> reduz retrabalho e substituições sem causa comprovada.</p></div>
@@ -405,7 +405,7 @@ export default function App() {
 
             <div className="engineering-showcase" data-reveal>
               <article className="showcase-card showcase-card--large">
-                <div className="showcase-copy"><span>Engenharia térmica</span><h3>Desempenho, capacidade e confiabilidade.</h3><p>Leitura do sistema como um todo para orientar decisões consistentes.</p></div>
+                <div className="showcase-copy"><span>Engenharia e refrigeração</span><h3>Desempenho, capacidade e confiabilidade.</h3><p>Leitura do sistema como um todo para orientar decisões consistentes.</p></div>
                 <div className="showcase-illustration"><ChillerIllustration /></div>
               </article>
               <article className="showcase-card">
@@ -424,7 +424,7 @@ export default function App() {
           <div className="container sectors-layout">
             <div className="section-heading" data-reveal>
               <span className="section-kicker">Onde a engenharia faz diferença</span>
-              <h2>Cada ambiente tem uma prioridade térmica diferente.</h2>
+              <h2>Cada ambiente exige uma estratégia de refrigeração.</h2>
               <p>O atendimento considera criticidade, ocupação, processo produtivo, continuidade e exigências documentais.</p>
             </div>
             <div className="sectors-grid">

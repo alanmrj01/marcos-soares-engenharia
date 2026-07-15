@@ -1,7 +1,7 @@
 export const siteConfig = {
   brand: {
     name: 'Marcos Soares',
-    descriptor: 'Engenharia Térmica & Refrigeração',
+    descriptor: 'Engenharia e Refrigeração',
   },
   contact: {
     whatsappNumber: '',
@@ -14,7 +14,7 @@ export const siteConfig = {
     registration: 'Inclua aqui o CREA e demais registros profissionais',
   },
   legal: {
-    companyName: 'Marcos Soares Engenharia Térmica',
+    companyName: 'Marcos Soares Engenharia e Refrigeração',
   },
 };
 

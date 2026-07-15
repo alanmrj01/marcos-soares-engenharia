@@ -24,7 +24,7 @@ export function IndustrialVisual() {
       <circle cx="113" cy="502" r="82" fill="var(--visual-bubble-warm)" />
 
       <rect x="82" y="72" width="596" height="74" rx="23" fill="var(--visual-panel)" stroke="var(--visual-line)" />
-      <text x="110" y="106" fill="var(--visual-title)" fontSize="18" fontWeight="800">CENTRAL TÉRMICA</text>
+      <text x="110" y="106" fill="var(--visual-title)" fontSize="18" fontWeight="800">CENTRAL DE REFRIGERAÇÃO</text>
       <text x="110" y="130" fill="var(--visual-muted)" fontSize="13">Operação • manutenção • documentação</text>
       <rect x="579" y="93" width="70" height="32" rx="16" fill="var(--visual-status-bg)" />
       <circle cx="599" cy="109" r="6" fill="var(--visual-teal)" />
@@ -39,7 +39,7 @@ export function IndustrialVisual() {
         <text x="141" y="184" textAnchor="middle" fill="var(--visual-muted)" fontSize="13">temperatura de saída</text>
         <rect x="36" y="270" width="210" height="13" rx="7" fill="var(--visual-progress-bg)" />
         <rect x="36" y="270" width="155" height="13" rx="7" fill="url(#thermal-blue)" />
-        <text x="36" y="305" fill="var(--visual-muted)" fontSize="12">Estabilidade térmica</text>
+        <text x="36" y="305" fill="var(--visual-muted)" fontSize="12">Estabilidade operacional</text>
         <text x="232" y="305" textAnchor="end" fill="var(--visual-title)" fontSize="12" fontWeight="800">74%</text>
       </g>
 
