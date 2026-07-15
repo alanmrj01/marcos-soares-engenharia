@@ -1,21 +1,30 @@
+import { useEffect, useState } from 'react';
 import {
+  Activity,
   ArrowRight,
   Building2,
   CheckCircle2,
   ClipboardCheck,
+  Clock3,
+  Cpu,
+  Droplets,
   Factory,
   FileCheck2,
   Gauge,
   HardHat,
+  Layers3,
   Mail,
   MapPin,
   MessageCircle,
+  Moon,
   Phone,
   Settings2,
   ShieldCheck,
   Snowflake,
   Store,
+  Sun,
   ThermometerSnowflake,
+  Wind,
   Wrench,
   Zap,
 } from 'lucide-react';
@@ -23,36 +32,44 @@ import { IndustrialVisual } from './components/IndustrialVisual';
 import { ChillerIllustration, HvacIllustration, PmocIllustration } from './components/ServiceIllustrations';
 import { buildWhatsAppUrl, siteConfig } from './config/site';
 
+type Theme = 'light' | 'dark';
+
 const services = [
   {
     icon: ThermometerSnowflake,
     title: 'Climatização comercial',
-    text: 'Instalação, adequação e manutenção de sistemas de ar-condicionado para operações que não podem parar.',
+    text: 'Instalação, adequação e manutenção de sistemas de ar-condicionado para ambientes que dependem de conforto e continuidade.',
+    accent: 'blue',
   },
   {
     icon: Factory,
     title: 'Refrigeração industrial',
-    text: 'Diagnóstico técnico e manutenção orientada à disponibilidade, estabilidade térmica e continuidade operacional.',
+    text: 'Diagnóstico técnico e manutenção orientada à estabilidade térmica, confiabilidade e disponibilidade do processo.',
+    accent: 'teal',
   },
   {
     icon: Gauge,
     title: 'Chillers e água gelada',
     text: 'Análise de desempenho, falhas, parâmetros de operação, componentes e condições do circuito térmico.',
+    accent: 'violet',
   },
   {
     icon: ClipboardCheck,
     title: 'PMOC e documentação',
-    text: 'Plano, registros, rotinas, evidências e acompanhamento técnico para uma gestão organizada da climatização.',
+    text: 'Plano, registros, rotinas e evidências para uma gestão organizada e rastreável da climatização.',
+    accent: 'warm',
   },
   {
     icon: Wrench,
     title: 'Manutenção preventiva e corretiva',
-    text: 'Intervenções planejadas, diagnóstico de causa e correções com foco em confiabilidade e vida útil dos ativos.',
+    text: 'Intervenções planejadas, investigação de causa e correções com foco na vida útil dos ativos.',
+    accent: 'gold',
   },
   {
     icon: Settings2,
-    title: 'Instalações e melhorias',
-    text: 'Projetos de implantação, substituição, retrofit e ajustes de capacidade conforme a necessidade da operação.',
+    title: 'Instalações, retrofit e melhorias',
+    text: 'Implantação, substituição e adequação de capacidade conforme a necessidade real da operação.',
+    accent: 'green',
   },
 ];
 
@@ -66,187 +83,242 @@ const sectors = [
 const process = [
   {
     number: '01',
+    icon: Activity,
     title: 'Levantamento técnico',
-    text: 'Entendimento da operação, equipamentos, sintomas, histórico e criticidade do ambiente.',
+    text: 'Leitura do ambiente, equipamentos, sintomas, histórico e criticidade da operação.',
   },
   {
     number: '02',
+    icon: Cpu,
     title: 'Diagnóstico e prioridade',
-    text: 'Identificação dos riscos, causas prováveis, necessidades documentais e plano de ação recomendado.',
+    text: 'Identificação das causas prováveis, riscos, necessidades documentais e plano recomendado.',
   },
   {
     number: '03',
+    icon: Wrench,
     title: 'Execução controlada',
-    text: 'Serviço realizado com critérios técnicos, organização, segurança e comunicação objetiva.',
+    text: 'Serviço com critério técnico, organização, segurança e comunicação objetiva.',
   },
   {
     number: '04',
+    icon: FileCheck2,
     title: 'Registro e continuidade',
-    text: 'Entrega das informações relevantes e orientação para manter o sistema estável ao longo do tempo.',
+    text: 'Informações relevantes, evidências e orientação para manter o sistema estável.',
   },
 ];
 
 const faqs = [
   {
     q: 'Vocês atendem equipamentos residenciais?',
-    a: 'A proposta principal é atender demandas comerciais e industriais. Casos residenciais de maior complexidade podem ser avaliados sob consulta.',
+    a: 'A atuação principal é comercial e industrial. Demandas residenciais de maior complexidade podem ser avaliadas conforme o equipamento e o escopo.',
   },
   {
-    q: 'É possível solicitar apenas o PMOC ou a documentação?',
-    a: 'Sim. A necessidade é avaliada conforme o sistema, o ambiente e o escopo técnico. O serviço pode envolver elaboração, atualização, acompanhamento ou organização dos registros.',
+    q: 'É possível contratar apenas o PMOC ou a documentação?',
+    a: 'Sim. O trabalho pode envolver elaboração, atualização, acompanhamento ou organização de registros, conforme a estrutura existente.',
   },
   {
     q: 'Vocês trabalham com contratos de manutenção?',
-    a: 'Sim. Podem ser estruturados atendimentos recorrentes para reduzir falhas, organizar rotinas e melhorar a previsibilidade da operação.',
+    a: 'Sim. O atendimento recorrente pode ser estruturado para reduzir falhas, organizar rotinas e melhorar a previsibilidade da operação.',
   },
   {
     q: 'O atendimento inclui chillers e sistemas centrais?',
-    a: 'Sim. A página foi posicionada justamente para demandas comerciais e industriais, incluindo chillers, água gelada e sistemas de maior porte.',
+    a: 'Sim. O escopo contempla chillers, água gelada, sistemas centrais e outras demandas de maior porte em ambientes comerciais e industriais.',
   },
 ];
+
+function getInitialTheme(): Theme {
+  try {
+    const stored = window.localStorage.getItem('ms-theme');
+    if (stored === 'light' || stored === 'dark') return stored;
+  } catch {
+    // O tema continua funcionando mesmo quando o armazenamento do navegador está bloqueado.
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
 
 function scrollToContact() {
   document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function ContactButton({ compact = false }: { compact?: boolean }) {
+function ContactButton({ compact = false, label }: { compact?: boolean; label?: string }) {
   const url = buildWhatsAppUrl(
     'Olá, Marcos. Gostaria de solicitar uma avaliação técnica para um sistema de climatização ou refrigeração.',
   );
+  const text = label ?? siteConfig.contact.whatsappLabel;
 
   if (url) {
     return (
       <a className={compact ? 'button button--compact' : 'button'} href={url} target="_blank" rel="noreferrer">
-        <MessageCircle size={compact ? 18 : 20} />
-        {siteConfig.contact.whatsappLabel}
+        <MessageCircle size={compact ? 17 : 19} />
+        {text}
       </a>
     );
   }
 
   return (
     <button className={compact ? 'button button--compact' : 'button'} type="button" onClick={scrollToContact}>
-      <MessageCircle size={compact ? 18 : 20} />
-      {siteConfig.contact.whatsappLabel}
+      <MessageCircle size={compact ? 17 : 19} />
+      {text}
     </button>
   );
 }
 
 export default function App() {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#101312' : '#f6f3ed');
+    try {
+      window.localStorage.setItem('ms-theme', theme);
+    } catch {
+      // Preferência não persistida quando o navegador bloqueia o armazenamento.
+    }
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((current) => (current === 'light' ? 'dark' : 'light'));
+
   return (
     <div className="site-shell">
       <header className="site-header">
         <div className="container header-inner">
           <a href="#topo" className="brand" aria-label="Voltar ao início">
             <span className="brand-mark" aria-hidden="true">
-              <Snowflake size={25} />
+              <Snowflake size={22} />
             </span>
-            <span>
+            <span className="brand-copy">
               <strong>{siteConfig.brand.name}</strong>
               <small>{siteConfig.brand.descriptor}</small>
             </span>
           </a>
+
           <nav className="desktop-nav" aria-label="Navegação principal">
             <a href="#solucoes">Soluções</a>
-            <a href="#engenharia">Diferenciais</a>
+            <a href="#engenharia">Engenharia</a>
             <a href="#pmoc">PMOC</a>
             <a href="#sobre">Sobre</a>
           </nav>
-          <ContactButton compact />
+
+          <div className="header-actions">
+            <button
+              className="theme-toggle"
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === 'light' ? 'Ativar tema escuro' : 'Ativar tema claro'}
+              title={theme === 'light' ? 'Tema escuro' : 'Tema claro'}
+            >
+              <Sun className="theme-icon theme-icon--sun" size={18} />
+              <Moon className="theme-icon theme-icon--moon" size={18} />
+            </button>
+            <ContactButton compact />
+          </div>
         </div>
       </header>
 
       <main>
         <section className="hero" id="topo">
-          <div className="hero-orb hero-orb--one" />
-          <div className="hero-orb hero-orb--two" />
+          <div className="hero-glow hero-glow--warm" />
+          <div className="hero-glow hero-glow--blue" />
           <div className="container hero-grid">
             <div className="hero-copy">
-              <div className="eyebrow"><HardHat size={17} /> Engenharia aplicada à operação</div>
+              <div className="eyebrow"><HardHat size={16} /> Engenharia térmica para operações reais</div>
               <h1>
-                Climatização e refrigeração com <span>diagnóstico, execução e responsabilidade técnica.</span>
+                Climatização e refrigeração com <span>visão de engenharia.</span>
               </h1>
               <p className="hero-lead">
-                Soluções comerciais e industriais em ar-condicionado, refrigeração, chillers, manutenção, PMOC e documentação — conduzidas por um engenheiro de manutenção com experiência em ambientes de grande porte.
+                Instalação, manutenção, chillers, refrigeração industrial, PMOC e documentação técnica — conduzidos por Marcos Soares, engenheiro de manutenção com experiência em ambientes comerciais e industriais de grande porte.
               </p>
               <div className="hero-actions">
-                <ContactButton />
-                <a className="button button--ghost" href="#solucoes">
-                  Ver soluções <ArrowRight size={19} />
+                <ContactButton label="Solicitar avaliação técnica" />
+                <a className="button button--secondary" href="#solucoes">
+                  Conhecer os serviços <ArrowRight size={18} />
                 </a>
               </div>
-              <div className="hero-proof" aria-label="Principais diferenciais">
-                <div><CheckCircle2 size={18} /><span>Visão de engenharia</span></div>
-                <div><CheckCircle2 size={18} /><span>Atuação comercial e industrial</span></div>
-                <div><CheckCircle2 size={18} /><span>Documentação e rastreabilidade</span></div>
+              <div className="hero-highlights" aria-label="Principais diferenciais">
+                <div><span className="highlight-dot highlight-dot--blue" /><strong>Diagnóstico</strong><small>antes da intervenção</small></div>
+                <div><span className="highlight-dot highlight-dot--warm" /><strong>Confiabilidade</strong><small>para sistemas críticos</small></div>
+                <div><span className="highlight-dot highlight-dot--teal" /><strong>Rastreabilidade</strong><small>com registros e PMOC</small></div>
               </div>
             </div>
-            <div className="hero-visual">
-              <div className="visual-status"><span /> Sistema monitorado</div>
+
+            <div className="hero-visual" aria-label="Painel ilustrativo de engenharia térmica">
               <IndustrialVisual />
-              <div className="floating-card floating-card--top">
-                <Zap size={19} />
-                <span><strong>Eficiência operacional</strong><small>decisões orientadas por dados</small></span>
+              <div className="visual-chip visual-chip--top">
+                <span className="visual-chip__icon visual-chip__icon--teal"><Activity size={17} /></span>
+                <span><strong>Operação acompanhada</strong><small>parâmetros e criticidade</small></span>
               </div>
-              <div className="floating-card floating-card--bottom">
-                <FileCheck2 size={19} />
-                <span><strong>Controle documentado</strong><small>rotinas, evidências e histórico</small></span>
+              <div className="visual-chip visual-chip--bottom">
+                <span className="visual-chip__icon visual-chip__icon--warm"><FileCheck2 size={17} /></span>
+                <span><strong>Manutenção documentada</strong><small>histórico e continuidade</small></span>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="trust-band" aria-label="Especialidades">
-          <div className="container trust-grid">
-            <span>Ar-condicionado</span>
-            <span>Refrigeração</span>
-            <span>Chillers</span>
-            <span>PMOC</span>
-            <span>Manutenção</span>
-            <span>Documentação</span>
+        <section className="expertise-strip" aria-label="Especialidades">
+          <div className="container expertise-grid">
+            <span><Wind size={17} /> Ar-condicionado</span>
+            <span><Droplets size={17} /> Refrigeração</span>
+            <span><Gauge size={17} /> Chillers</span>
+            <span><ClipboardCheck size={17} /> PMOC</span>
+            <span><Wrench size={17} /> Manutenção</span>
+            <span><FileCheck2 size={17} /> Documentação</span>
           </div>
         </section>
 
         <section className="section" id="solucoes">
           <div className="container">
-            <div className="section-heading section-heading--center">
-              <span className="section-kicker">Soluções completas</span>
-              <h2>Do equipamento isolado ao sistema central.</h2>
-              <p>Atendimento pensado para reduzir improviso, organizar a manutenção e dar mais segurança às decisões técnicas.</p>
+            <div className="section-heading section-heading--split">
+              <div>
+                <span className="section-kicker">Soluções técnicas</span>
+                <h2>Do equipamento isolado ao sistema central.</h2>
+              </div>
+              <p>Um portfólio completo para reduzir improvisos, organizar a manutenção e dar mais segurança às decisões técnicas.</p>
             </div>
+
             <div className="services-grid">
-              {services.map(({ icon: Icon, title, text }) => (
-                <article className="service-card" key={title}>
-                  <div className="service-icon"><Icon size={25} /></div>
+              {services.map(({ icon: Icon, title, text, accent }) => (
+                <article className={`service-card service-card--${accent}`} key={title}>
+                  <div className="service-icon"><Icon size={23} /></div>
                   <h3>{title}</h3>
                   <p>{text}</p>
-                  <span className="card-line" />
+                  <span className="service-arrow" aria-hidden="true"><ArrowRight size={17} /></span>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="section section--dark" id="engenharia">
-          <div className="container engineering-grid">
-            <div>
-              <span className="section-kicker">Mais do que executar uma ordem</span>
-              <h2>Engenharia para entender o problema antes de trocar componentes.</h2>
+        <section className="section engineering-section" id="engenharia">
+          <div className="container engineering-layout">
+            <div className="engineering-copy">
+              <span className="section-kicker">Engenharia aplicada ao campo</span>
+              <h2>Entender o sistema antes de trocar componentes.</h2>
               <p className="section-intro">
-                Uma falha térmica pode envolver capacidade inadequada, condição de operação, sujeira, vazamento, automação, fluxo, instalação ou manutenção deficiente. O serviço começa pela leitura correta do sistema.
+                Uma falha térmica pode envolver capacidade, condição de operação, fluxo, automação, instalação ou manutenção. O serviço começa pela leitura correta do conjunto — não por tentativa e erro.
               </p>
               <div className="engineering-points">
-                <div><span>01</span><p><strong>Diagnóstico estruturado</strong> para reduzir tentativas, retrabalho e substituições sem causa comprovada.</p></div>
-                <div><span>02</span><p><strong>Criticidade operacional</strong> considerada na definição de prioridade, prazo e estratégia de intervenção.</p></div>
-                <div><span>03</span><p><strong>Manutenção com histórico</strong> para transformar atendimentos isolados em conhecimento sobre o ativo.</p></div>
+                <div><span><Activity size={18} /></span><p><strong>Diagnóstico estruturado</strong> para reduzir retrabalho e substituições sem causa comprovada.</p></div>
+                <div><span><Clock3 size={18} /></span><p><strong>Criticidade operacional</strong> considerada na prioridade, no prazo e na estratégia de intervenção.</p></div>
+                <div><span><Layers3 size={18} /></span><p><strong>Histórico técnico</strong> para transformar atendimentos isolados em conhecimento sobre o ativo.</p></div>
               </div>
+              <a className="text-link" href="#contato">Apresentar uma necessidade <ArrowRight size={17} /></a>
             </div>
-            <div className="engineering-stack">
-              <article className="technical-card technical-card--featured">
+
+            <div className="engineering-showcase">
+              <article className="showcase-card showcase-card--large">
+                <div className="showcase-copy"><span>Engenharia térmica</span><h3>Desempenho, capacidade e confiabilidade.</h3><p>Leitura do sistema como um todo para orientar decisões consistentes.</p></div>
                 <ChillerIllustration />
-                <div><span>Engenharia térmica</span><h3>Desempenho, capacidade e confiabilidade</h3></div>
               </article>
-              <article className="technical-card"><HvacIllustration /><div><span>Climatização</span><h3>Conforto e estabilidade para a operação</h3></div></article>
-              <article className="technical-card"><PmocIllustration /><div><span>Gestão técnica</span><h3>Rotinas e registros que permanecem organizados</h3></div></article>
+              <article className="showcase-card">
+                <HvacIllustration />
+                <div className="showcase-copy"><span>Climatização</span><h3>Conforto e estabilidade para a operação.</h3></div>
+              </article>
+              <article className="showcase-card showcase-card--accent">
+                <PmocIllustration />
+                <div className="showcase-copy"><span>Gestão técnica</span><h3>Rotinas e registros que permanecem organizados.</h3></div>
+              </article>
             </div>
           </div>
         </section>
@@ -254,13 +326,16 @@ export default function App() {
         <section className="section sectors-section">
           <div className="container sectors-layout">
             <div className="section-heading">
-              <span className="section-kicker">Aplicações</span>
+              <span className="section-kicker">Onde a engenharia faz diferença</span>
               <h2>Soluções adaptadas ao risco e à rotina de cada ambiente.</h2>
-              <p>O atendimento considera criticidade, ocupação, processo produtivo, necessidade de continuidade e exigências documentais.</p>
+              <p>O atendimento considera criticidade, ocupação, processo produtivo, continuidade e exigências documentais.</p>
             </div>
             <div className="sectors-grid">
-              {sectors.map(({ icon: Icon, label }) => (
-                <div className="sector-card" key={label}><Icon size={24} /><span>{label}</span></div>
+              {sectors.map(({ icon: Icon, label }, index) => (
+                <div className="sector-card" key={label}>
+                  <span className={`sector-icon sector-icon--${index + 1}`}><Icon size={22} /></span>
+                  <span>{label}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -269,27 +344,30 @@ export default function App() {
         <section className="section pmoc-section" id="pmoc">
           <div className="container pmoc-grid">
             <div className="pmoc-visual">
+              <div className="pmoc-orbit pmoc-orbit--one" />
+              <div className="pmoc-orbit pmoc-orbit--two" />
               <div className="document-sheet">
-                <div className="document-head"><Snowflake size={22} /><span>PMOC</span></div>
+                <div className="document-head"><Snowflake size={21} /><span>PMOC</span></div>
                 <strong>Plano de Manutenção, Operação e Controle</strong>
-                <div className="document-row"><CheckCircle2 size={17} /> Identificação dos sistemas</div>
-                <div className="document-row"><CheckCircle2 size={17} /> Rotinas e periodicidades</div>
-                <div className="document-row"><CheckCircle2 size={17} /> Registros das intervenções</div>
-                <div className="document-row"><CheckCircle2 size={17} /> Responsabilidades e acompanhamento</div>
+                <div className="document-row"><CheckCircle2 size={16} /> Identificação dos sistemas</div>
+                <div className="document-row"><CheckCircle2 size={16} /> Rotinas e periodicidades</div>
+                <div className="document-row"><CheckCircle2 size={16} /> Registros das intervenções</div>
+                <div className="document-row"><CheckCircle2 size={16} /> Responsabilidades e acompanhamento</div>
                 <div className="document-stamp">CONTROLE TÉCNICO</div>
               </div>
+              <div className="pmoc-note"><ShieldCheck size={17} /><span>Organização, evidência e continuidade.</span></div>
             </div>
             <div>
               <span className="section-kicker">PMOC e conformidade</span>
               <h2>Documentação que transforma manutenção em processo controlado.</h2>
               <p>
-                O PMOC organiza equipamentos, rotinas, periodicidades, responsáveis e registros da climatização. A Lei nº 13.589/2018 dispõe sobre a manutenção de instalações e equipamentos de sistemas de climatização em ambientes de uso público e coletivo.
+                O PMOC organiza equipamentos, rotinas, periodicidades, responsáveis e registros. A Lei nº 13.589/2018 dispõe sobre a manutenção de instalações e equipamentos de climatização em ambientes de uso público e coletivo.
               </p>
               <ul className="check-list">
-                <li><CheckCircle2 size={19} /> Inventário e identificação dos equipamentos</li>
-                <li><CheckCircle2 size={19} /> Planejamento das atividades preventivas</li>
-                <li><CheckCircle2 size={19} /> Registro das condições e intervenções</li>
-                <li><CheckCircle2 size={19} /> Orientação técnica conforme o escopo da instalação</li>
+                <li><CheckCircle2 size={18} /> Inventário e identificação dos equipamentos</li>
+                <li><CheckCircle2 size={18} /> Planejamento das atividades preventivas</li>
+                <li><CheckCircle2 size={18} /> Registro das condições e intervenções</li>
+                <li><CheckCircle2 size={18} /> Orientação técnica conforme o escopo da instalação</li>
               </ul>
               <a className="text-link" href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13589.htm" target="_blank" rel="noreferrer">
                 Consultar a Lei nº 13.589/2018 <ArrowRight size={17} />
@@ -303,13 +381,14 @@ export default function App() {
             <div className="section-heading section-heading--center">
               <span className="section-kicker">Atendimento organizado</span>
               <h2>Um caminho claro do primeiro contato à continuidade da operação.</h2>
+              <p>Menos burocracia para começar. Mais clareza em cada etapa.</p>
             </div>
             <div className="process-grid">
-              {process.map((item) => (
-                <article className="process-card" key={item.number}>
-                  <span>{item.number}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
+              {process.map(({ number, icon: Icon, title, text }) => (
+                <article className="process-card" key={number}>
+                  <div className="process-top"><span>{number}</span><Icon size={21} /></div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </article>
               ))}
             </div>
@@ -319,21 +398,26 @@ export default function App() {
         <section className="section about-section" id="sobre">
           <div className="container about-grid">
             <div className="about-portrait" aria-label="Espaço reservado para foto profissional de Marcos Soares">
+              <div className="portrait-glow" />
               <div className="portrait-initials">MS</div>
-              <div className="portrait-lines"><span /><span /><span /></div>
-              <p>Adicione aqui uma foto profissional sem alterar o layout</p>
+              <div className="portrait-badge"><HardHat size={17} /><span>Engenharia de manutenção</span></div>
+              <p>Substitua este painel por uma foto profissional quando estiver disponível.</p>
             </div>
-            <div>
+            <div className="about-copy">
               <span className="section-kicker">Experiência aplicada ao campo</span>
               <h2>Marcos Soares</h2>
               <h3 className="about-role">{siteConfig.professional.title}</h3>
               <p>
-                Experiência construída em operações industriais e comerciais de grande porte, acompanhando manutenção, falhas, planejamento, equipes e disponibilidade de sistemas essenciais.
+                Anos de experiência em operações industriais e comerciais de grande porte, acompanhando manutenção, falhas, planejamento, equipes e disponibilidade de sistemas essenciais.
               </p>
               <p>
                 A proposta é unir conhecimento de engenharia com comunicação direta: identificar o que realmente afeta o sistema, definir a intervenção adequada e deixar a operação mais organizada depois do atendimento.
               </p>
-              <div className="credential-box"><ShieldCheck size={22} /><span>{siteConfig.professional.registration}</span></div>
+              <div className="about-values">
+                <div><ShieldCheck size={20} /><span><strong>Responsabilidade técnica</strong><small>decisões fundamentadas</small></span></div>
+                <div><Activity size={20} /><span><strong>Visão de manutenção</strong><small>foco em confiabilidade</small></span></div>
+              </div>
+              <div className="credential-box"><ShieldCheck size={21} /><span>{siteConfig.professional.registration}</span></div>
             </div>
           </div>
         </section>
@@ -343,11 +427,11 @@ export default function App() {
             <div className="contact-copy">
               <span className="section-kicker">Solicite uma avaliação</span>
               <h2>Conte o que está acontecendo com o seu sistema.</h2>
-              <p>Envie as informações iniciais. O contato seguinte será direcionado ao diagnóstico da necessidade, sem transformar a conversa em um roteiro comercial genérico.</p>
+              <p>Envie as informações iniciais. O retorno será direcionado à necessidade técnica, com uma conversa objetiva sobre o cenário.</p>
               <div className="contact-list">
-                <div><MapPin size={20} /><span>{siteConfig.contact.serviceArea}</span></div>
-                <div><Mail size={20} /><a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a></div>
-                <div><Phone size={20} /><span>Telefone e WhatsApp configuráveis em <code>src/config/site.ts</code></span></div>
+                <div><MapPin size={19} /><span>{siteConfig.contact.serviceArea}</span></div>
+                <div><Mail size={19} /><a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a></div>
+                <div><Phone size={19} /><span>Telefone e WhatsApp configuráveis em <code>src/config/site.ts</code></span></div>
               </div>
             </div>
             <form className="contact-form" name="avaliacao-tecnica" method="POST" action="/obrigado.html" data-netlify="true" data-netlify-honeypot="bot-field">
@@ -373,7 +457,7 @@ export default function App() {
                 </select>
               </label>
               <label>Conte brevemente o cenário<textarea required name="mensagem" rows={5} maxLength={1200} placeholder="Equipamentos envolvidos, sintomas, local e urgência..." /></label>
-              <button className="button form-submit" type="submit">Enviar solicitação <ArrowRight size={19} /></button>
+              <button className="button form-submit" type="submit">Enviar solicitação <ArrowRight size={18} /></button>
               <small>Seus dados serão usados apenas para retorno sobre esta solicitação.</small>
             </form>
           </div>
@@ -393,14 +477,14 @@ export default function App() {
         <section className="final-cta">
           <div className="container final-cta-inner">
             <div><span className="section-kicker">Refrigeração com visão de engenharia</span><h2>Mais segurança técnica para sistemas que não podem parar.</h2></div>
-            <ContactButton />
+            <ContactButton label="Solicitar avaliação" />
           </div>
         </section>
       </main>
 
       <footer className="site-footer">
         <div className="container footer-grid">
-          <div className="brand brand--footer"><span className="brand-mark"><Snowflake size={23} /></span><span><strong>{siteConfig.brand.name}</strong><small>{siteConfig.brand.descriptor}</small></span></div>
+          <div className="brand brand--footer"><span className="brand-mark"><Snowflake size={20} /></span><span className="brand-copy"><strong>{siteConfig.brand.name}</strong><small>{siteConfig.brand.descriptor}</small></span></div>
           <p>© {new Date().getFullYear()} {siteConfig.legal.companyName}. Todos os direitos reservados.</p>
           <a href="#topo">Voltar ao topo ↑</a>
         </div>

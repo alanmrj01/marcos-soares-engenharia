@@ -1,20 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06111d"/><stop offset="1" stop-color="#0c2a42"/></linearGradient>
-    <linearGradient id="ice" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6fe4ff"/><stop offset="1" stop-color="#2f7dff"/></linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f4ee"/><stop offset="1" stop-color="#ebe6dc"/></linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2d61e6"/><stop offset=".58" stop-color="#168e79"/><stop offset="1" stop-color="#ef6c45"/></linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#eee9e0"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#2f3834" flood-opacity=".18"/></filter>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="970" cy="160" r="220" fill="#0e4260" opacity=".6"/>
-  <circle cx="1040" cy="480" r="260" fill="#112b56" opacity=".7"/>
-  <g transform="translate(760 130)">
-    <rect width="320" height="360" rx="36" fill="#0b1d2c" stroke="#2e6685" stroke-width="2"/>
-    <rect x="42" y="42" width="236" height="276" rx="20" fill="#102d43"/>
-    <circle cx="160" cy="180" r="76" fill="none" stroke="url(#ice)" stroke-width="18"/>
-    <path d="M160 94v172M74 180h172M100 120l120 120M220 120L100 240" stroke="#d7f7ff" stroke-width="11" stroke-linecap="round"/>
-    <circle cx="160" cy="180" r="25" fill="#0b1d2c" stroke="#d7f7ff" stroke-width="8"/>
+  <circle cx="1050" cy="90" r="250" fill="#dce5ff"/>
+  <circle cx="80" cy="590" r="250" fill="#ffe3d8"/>
+  <g transform="translate(748 90)" filter="url(#shadow)">
+    <rect width="352" height="450" rx="42" fill="url(#panel)" stroke="#d4cfc6"/>
+    <rect x="32" y="34" width="288" height="58" rx="18" fill="#fff" stroke="#ded9d0"/>
+    <text x="56" y="68" fill="#171b1a" font-family="Arial" font-size="18" font-weight="700">CENTRAL TÉRMICA</text>
+    <circle cx="286" cy="63" r="9" fill="#168e79"/>
+    <circle cx="176" cy="235" r="92" fill="none" stroke="#e4dfd6" stroke-width="24"/>
+    <circle cx="176" cy="235" r="92" fill="none" stroke="url(#brand)" stroke-width="17" stroke-dasharray="366 212" stroke-linecap="round" transform="rotate(-90 176 235)"/>
+    <text x="176" y="226" text-anchor="middle" fill="#171b1a" font-family="Arial" font-size="42" font-weight="800">7.2°C</text>
+    <text x="176" y="255" text-anchor="middle" fill="#6b7671" font-family="Arial" font-size="15">temperatura de saída</text>
+    <rect x="62" y="365" width="228" height="14" rx="7" fill="#e4dfd6"/>
+    <rect x="62" y="365" width="168" height="14" rx="7" fill="url(#brand)"/>
   </g>
-  <text x="90" y="215" fill="#7ce7ff" font-family="Arial" font-size="26" font-weight="700" letter-spacing="4">ENGENHARIA TÉRMICA</text>
-  <text x="90" y="295" fill="#ffffff" font-family="Arial" font-size="62" font-weight="800">Climatização e</text>
-  <text x="90" y="366" fill="#ffffff" font-family="Arial" font-size="62" font-weight="800">refrigeração profissional</text>
-  <text x="90" y="430" fill="#b9d5e4" font-family="Arial" font-size="26">Instalação • manutenção • chillers • PMOC • documentação</text>
+  <text x="82" y="170" fill="#2d61e6" font-family="Arial" font-size="25" font-weight="700" letter-spacing="3">ENGENHARIA TÉRMICA</text>
+  <text x="82" y="255" fill="#171b1a" font-family="Arial" font-size="64" font-weight="800">Climatização e</text>
+  <text x="82" y="328" fill="#171b1a" font-family="Arial" font-size="64" font-weight="800">refrigeração com</text>
+  <text x="82" y="401" fill="url(#brand)" font-family="Arial" font-size="64" font-weight="800">visão de engenharia.</text>
+  <text x="82" y="466" fill="#59625f" font-family="Arial" font-size="25">Instalação • manutenção • chillers • PMOC • documentação</text>
 </svg>

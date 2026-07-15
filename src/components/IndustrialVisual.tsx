@@ -1,59 +1,74 @@
 export function IndustrialVisual() {
   return (
-    <svg viewBox="0 0 760 620" role="img" aria-label="Sistema industrial de climatização e refrigeração">
+    <svg viewBox="0 0 760 620" role="img" aria-label="Painel ilustrativo de um sistema de climatização e refrigeração">
       <defs>
-        <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
-          <stop stopColor="#15354a" />
-          <stop offset="1" stopColor="#071923" />
+        <linearGradient id="thermal-card" x1="0" x2="1" y1="0" y2="1">
+          <stop stopColor="var(--visual-surface-1)" />
+          <stop offset="1" stopColor="var(--visual-surface-2)" />
         </linearGradient>
-        <linearGradient id="ice" x1="0" x2="1">
-          <stop stopColor="#81edff" />
-          <stop offset="1" stopColor="#347dff" />
+        <linearGradient id="thermal-blue" x1="0" x2="1">
+          <stop stopColor="var(--visual-blue-1)" />
+          <stop offset="1" stopColor="var(--visual-blue-2)" />
         </linearGradient>
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="7" result="blur" />
-          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        <linearGradient id="thermal-warm" x1="0" x2="1">
+          <stop stopColor="var(--visual-warm-1)" />
+          <stop offset="1" stopColor="var(--visual-warm-2)" />
+        </linearGradient>
+        <filter id="thermal-shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="20" stdDeviation="24" floodColor="var(--visual-shadow)" floodOpacity=".24" />
         </filter>
       </defs>
-      <rect x="34" y="34" width="692" height="552" rx="46" fill="url(#panel)" stroke="#2e607b" strokeWidth="2" />
-      <rect x="70" y="72" width="620" height="82" rx="22" fill="#091e2b" stroke="#25536a" />
-      <text x="104" y="111" fill="#7ce7ff" fontSize="18" fontWeight="700">CENTRAL TÉRMICA</text>
-      <text x="104" y="137" fill="#a7c7d7" fontSize="14">Monitoramento • operação • manutenção</text>
-      <circle cx="620" cy="113" r="20" fill="#0c2c3c" stroke="#51dbff" />
-      <circle cx="620" cy="113" r="8" fill="#51dbff" filter="url(#glow)" />
 
-      <g transform="translate(82 190)">
-        <rect width="268" height="320" rx="30" fill="#0a1f2c" stroke="#2c5b73" />
-        <rect x="30" y="30" width="208" height="54" rx="12" fill="#112f41" />
-        <text x="48" y="63" fill="#dff9ff" fontSize="17" fontWeight="700">CHILLER / ÁGUA GELADA</text>
-        <circle cx="134" cy="190" r="75" fill="none" stroke="#1f4d65" strokeWidth="21" />
-        <circle cx="134" cy="190" r="75" fill="none" stroke="url(#ice)" strokeWidth="16" strokeDasharray="300 180" strokeLinecap="round" transform="rotate(-90 134 190)" />
-        <text x="134" y="183" textAnchor="middle" fill="#ffffff" fontSize="34" fontWeight="800">7.2°C</text>
-        <text x="134" y="208" textAnchor="middle" fill="#93b9cb" fontSize="14">temperatura de saída</text>
-        <rect x="42" y="282" width="184" height="12" rx="6" fill="#173c50" />
-        <rect x="42" y="282" width="139" height="12" rx="6" fill="url(#ice)" />
+      <rect x="42" y="30" width="676" height="556" rx="54" fill="url(#thermal-card)" stroke="var(--visual-line)" strokeWidth="2" filter="url(#thermal-shadow)" />
+      <circle cx="628" cy="104" r="54" fill="var(--visual-bubble-blue)" />
+      <circle cx="113" cy="502" r="82" fill="var(--visual-bubble-warm)" />
+
+      <rect x="82" y="72" width="596" height="74" rx="23" fill="var(--visual-panel)" stroke="var(--visual-line)" />
+      <text x="110" y="106" fill="var(--visual-title)" fontSize="18" fontWeight="800">CENTRAL TÉRMICA</text>
+      <text x="110" y="130" fill="var(--visual-muted)" fontSize="13">Operação • manutenção • documentação</text>
+      <rect x="579" y="93" width="70" height="32" rx="16" fill="var(--visual-status-bg)" />
+      <circle cx="599" cy="109" r="6" fill="var(--visual-teal)" />
+      <text x="614" y="114" fill="var(--visual-status-text)" fontSize="11" fontWeight="700">online</text>
+
+      <g transform="translate(82 178)">
+        <rect width="282" height="326" rx="34" fill="var(--visual-panel)" stroke="var(--visual-line)" />
+        <text x="28" y="39" fill="var(--visual-kicker)" fontSize="13" fontWeight="800">CHILLER / ÁGUA GELADA</text>
+        <circle cx="141" cy="166" r="78" fill="none" stroke="var(--visual-ring)" strokeWidth="22" />
+        <circle cx="141" cy="166" r="78" fill="none" stroke="url(#thermal-blue)" strokeWidth="15" strokeDasharray="316 174" strokeLinecap="round" transform="rotate(-90 141 166)" />
+        <text x="141" y="158" textAnchor="middle" fill="var(--visual-title)" fontSize="37" fontWeight="850">7.2°C</text>
+        <text x="141" y="184" textAnchor="middle" fill="var(--visual-muted)" fontSize="13">temperatura de saída</text>
+        <rect x="36" y="270" width="210" height="13" rx="7" fill="var(--visual-progress-bg)" />
+        <rect x="36" y="270" width="155" height="13" rx="7" fill="url(#thermal-blue)" />
+        <text x="36" y="305" fill="var(--visual-muted)" fontSize="12">Estabilidade térmica</text>
+        <text x="232" y="305" textAnchor="end" fill="var(--visual-title)" fontSize="12" fontWeight="800">74%</text>
       </g>
 
-      <g transform="translate(386 190)">
-        <rect width="290" height="146" rx="26" fill="#0a1f2c" stroke="#2c5b73" />
-        <text x="28" y="36" fill="#84e8ff" fontSize="15" fontWeight="700">EFICIÊNCIA DO SISTEMA</text>
-        <path d="M30 104 C72 82, 88 95, 122 66 S184 68, 216 46 S252 50, 264 38" fill="none" stroke="url(#ice)" strokeWidth="6" strokeLinecap="round" />
-        <path d="M30 112H262" stroke="#23495d" strokeWidth="2" />
-        <circle cx="264" cy="38" r="7" fill="#7be8ff" />
+      <g transform="translate(394 178)">
+        <rect width="284" height="148" rx="28" fill="var(--visual-panel)" stroke="var(--visual-line)" />
+        <text x="26" y="36" fill="var(--visual-kicker)" fontSize="13" fontWeight="800">EFICIÊNCIA DO SISTEMA</text>
+        <path d="M28 109 C62 94, 88 100, 118 74 S174 78, 205 55 S247 58, 258 43" fill="none" stroke="url(#thermal-blue)" strokeWidth="6" strokeLinecap="round" />
+        <path d="M28 118H258" stroke="var(--visual-grid)" strokeWidth="2" />
+        <circle cx="258" cy="43" r="8" fill="var(--visual-blue-1)" />
+        <rect x="190" y="93" width="68" height="22" rx="11" fill="var(--visual-status-bg)" />
+        <text x="224" y="108" textAnchor="middle" fill="var(--visual-status-text)" fontSize="10" fontWeight="800">estável</text>
       </g>
 
-      <g transform="translate(386 364)">
-        <rect width="290" height="146" rx="26" fill="#0a1f2c" stroke="#2c5b73" />
-        <text x="28" y="37" fill="#84e8ff" fontSize="15" fontWeight="700">PLANO DE MANUTENÇÃO</text>
-        <g fill="#dff8ff" fontSize="14">
-          <text x="28" y="72">✓ inspeção técnica</text>
-          <text x="28" y="98">✓ registros e documentação</text>
-          <text x="28" y="124">✓ rastreabilidade das rotinas</text>
-        </g>
+      <g transform="translate(394 356)">
+        <rect width="284" height="148" rx="28" fill="var(--visual-panel)" stroke="var(--visual-line)" />
+        <text x="26" y="36" fill="var(--visual-kicker)" fontSize="13" fontWeight="800">PLANO DE MANUTENÇÃO</text>
+        <circle cx="39" cy="69" r="11" fill="var(--visual-check-bg)" />
+        <path d="M34 69l4 4 7-9" fill="none" stroke="var(--visual-teal)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="60" y="74" fill="var(--visual-body)" fontSize="13">Inspeção técnica</text>
+        <circle cx="39" cy="101" r="11" fill="var(--visual-check-bg)" />
+        <path d="M34 101l4 4 7-9" fill="none" stroke="var(--visual-teal)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="60" y="106" fill="var(--visual-body)" fontSize="13">Registros e documentação</text>
+        <circle cx="39" cy="133" r="11" fill="var(--visual-check-bg)" />
+        <path d="M34 133l4 4 7-9" fill="none" stroke="var(--visual-teal)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="60" y="138" fill="var(--visual-body)" fontSize="13">Rastreabilidade das rotinas</text>
       </g>
 
-      <path d="M350 350H386" stroke="#58dfff" strokeWidth="6" strokeDasharray="7 8" />
-      <path d="M530 336V364" stroke="#58dfff" strokeWidth="6" strokeDasharray="7 8" />
+      <path d="M364 341H394" stroke="url(#thermal-warm)" strokeWidth="6" strokeDasharray="6 8" strokeLinecap="round" />
+      <path d="M536 326V356" stroke="url(#thermal-warm)" strokeWidth="6" strokeDasharray="6 8" strokeLinecap="round" />
     </svg>
   );
 }

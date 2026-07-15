@@ -1,6 +1,15 @@
 # Marcos Soares — Engenharia Térmica & Refrigeração
 
-Landing page React + Vite + TypeScript para serviços de climatização e refrigeração comercial e industrial.
+Landing page/portfólio React + Vite + TypeScript para serviços de climatização e refrigeração comercial e industrial.
+
+## Direção visual
+
+- interface editorial, humana e tecnológica;
+- tema claro e escuro;
+- preferência inicial baseada no sistema operacional;
+- escolha do visitante salva no navegador;
+- ilustrações vetoriais locais e responsivas;
+- nenhum script, imagem ou fonte externa.
 
 ## Executar localmente
 
@@ -46,13 +55,13 @@ Enquanto o WhatsApp estiver vazio, os botões direcionam ao formulário da pági
 
 ## Foto profissional
 
-A seção “Marcos Soares” contém um espaço visual pronto para uma foto. O placeholder não usa imagem genérica para evitar representar uma pessoa real incorretamente.
+A seção “Marcos Soares” contém um painel visual pronto para receber uma foto real.
 
 Para inserir a foto:
 
 1. adicione a imagem em `public/marcos-soares.webp`;
 2. substitua o conteúdo de `.about-portrait` no componente `src/App.tsx` por uma tag `<img>`;
-3. mantenha `object-fit: cover` e a proporção do contêiner.
+3. mantenha `width: 100%`, `height: 100%` e `object-fit: cover`.
 
 ## Conteúdo e legislação
 
